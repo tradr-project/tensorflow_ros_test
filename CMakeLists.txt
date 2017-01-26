@@ -9,9 +9,11 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package()
 
 include_directories(
+  # needs to be first so that the tensorflow versions of includes are always treated first (not needed on all systems, but sometimes it is).
+  ${tensorflow_ros_INCLUDE_DIRS}
   ${catkin_INCLUDE_DIRS}
 )
 
 add_executable(tensorflow_ros_test_node src/test.cpp)
 add_dependencies(tensorflow_ros_test_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(tensorflow_ros_test_node ${catkin_LIBRARIES})
+target_link_libraries(tensorflow_ros_test_node ${tensorflow_ros_LIBRARIES} ${catkin_LIBRARIES})

@@ -1,20 +1,39 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.5)
 project(tensorflow_ros_test)
+
+if("$ENV{ROS_DISTRO}" STRLESS "kinetic")
+    message(FATAL_ERROR "This version requires ROS Kinetic and newer.")
+endif()
+
+# Since ROS Kinetic, there is a version clash between the C++ ABI used to compile ROS (C++11)
+# and TF (C++03) which makes it impossible to mix ROS and TF code in a single file.
+# However, if the TF code is separated to its own library which is then linked to the ROS node,
+# you can get the best of both worlds (given some limitations to the API of your library).
+# Read comments in the example files to learn about these limitations.
 
 find_package(catkin REQUIRED COMPONENTS
   roscpp
-  tensorflow_ros
 )
+
+# call find_package separately so that tensorflow isn't included in everything
+find_package(tensorflow_ros REQUIRED)
 
 catkin_package()
 
 include_directories(
-  # needs to be first so that the tensorflow versions of includes are always treated first (not needed on all systems, but sometimes it is).
-  ${tensorflow_ros_INCLUDE_DIRS}
+  include
   ${catkin_INCLUDE_DIRS}
 )
 
+# Build the TF library. Do NOT include catkin_LIBRARIES/catkin_INCLUDE_DIRS here!
+add_library(tensorflow_ros_test_lib src/lib.cpp)
+add_dependencies(tensorflow_ros_test_lib ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_include_directories(tensorflow_ros_test_lib BEFORE PRIVATE ${tensorflow_ros_INCLUDE_DIRS})
+target_link_libraries(tensorflow_ros_test_lib ${tensorflow_ros_LIBRARIES})
+# Compile the TF library using CXX03 ABI.
+target_compile_definitions(tensorflow_ros_test_lib PRIVATE -D_GLIBCXX_USE_CXX11_ABI=0)
+
+# Build the ROS node and link the TF library to it. Do NOT include tensorflow_ros_LIBRARIES here!
 add_executable(tensorflow_ros_test_node src/test.cpp)
 add_dependencies(tensorflow_ros_test_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-# again, tensorflow_ros_LIBRARIES need to go first in some setups
-target_link_libraries(tensorflow_ros_test_node ${tensorflow_ros_LIBRARIES} ${catkin_LIBRARIES})
+target_link_libraries(tensorflow_ros_test_node tensorflow_ros_test_lib ${catkin_LIBRARIES})

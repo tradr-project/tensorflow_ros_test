@@ -11,7 +11,9 @@ int main(int argc, char* argv[]) {
       
   // Initialize a tensorflow session
   Session* session;
-  Status status = NewSession(SessionOptions(), &session);
+  tensorflow::SessionOptions options = SessionOptions();
+  options.config.mutable_gpu_options()->set_allow_growth(true);
+  Status status = NewSession(options, &session);
   if (!status.ok()) {
     std::cout << status.ToString() << "\n";
     return 1;

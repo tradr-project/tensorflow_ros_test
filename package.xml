@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>tensorflow_ros_test</name>
-  <version>1.0.0</version>
+  <version>1.1.1</version>
   <description>A test package for checking if tensorflow_ros works correctly.</description>
 
   <maintainer email="martin.pecka@cvut.cz">Martin Pecka</maintainer>

@@ -14,7 +14,9 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
+link_directories(${TENSORFLOW_ROS_LINK_DIRS})
+
 add_executable(tensorflow_ros_test_node src/test.cpp)
 add_dependencies(tensorflow_ros_test_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 # again, tensorflow_ros_LIBRARIES need to go first in some setups
-target_link_libraries(tensorflow_ros_test_node ${tensorflow_ros_LIBRARIES} ${catkin_LIBRARIES})
+target_link_libraries(tensorflow_ros_test_node LINK_PRIVATE ${TENSORFLOW_LIBRARIES} ${PYTHON_LIBRARIES} LINK_PUBLIC ${catkin_LIBRARIES})

@@ -12,6 +12,6 @@
 // It is even better not to use std::string, but instead pass char* and convert it to std::string
 // in the .cpp file. std::vector and std::list can also cause problems.
 
-int do_tensorflow();
+int do_tensorflow(const char *model_path);
 
 #endif //TENSORFLOW_ROS_TEST_LIB_H

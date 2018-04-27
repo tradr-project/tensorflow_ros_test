@@ -2,17 +2,19 @@ cmake_minimum_required(VERSION 3.5)
 project(tensorflow_ros_test)
 
 if("$ENV{ROS_DISTRO}" STRLESS "kinetic")
-    message(FATAL_ERROR "This version requires ROS Kinetic and newer.")
+    message(WARNING "Your system can probably run an easier-to-use version of this test. Switch to master branch.")
 endif()
 
-# Since ROS Kinetic, there is a version clash between the C++ ABI used to compile ROS (C++11)
+# Since ROS Kinetic/Ubuntu Xenial, there is a version clash between the C++ ABI used to compile ROS (C++11)
 # and TF (C++03) which makes it impossible to mix ROS and TF code in a single file.
 # However, if the TF code is separated to its own library which is then linked to the ROS node,
 # you can get the best of both worlds (given some limitations to the API of your library).
 # Read comments in the example files to learn about these limitations.
+# See also https://github.com/tradr-project/tensorflow_ros#c-abi-difference-problems .
 
 find_package(catkin REQUIRED COMPONENTS
   roscpp
+  roslib
 )
 
 # call find_package separately so that tensorflow isn't included in everything

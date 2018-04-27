@@ -7,7 +7,7 @@
 
 using namespace tensorflow;
 
-int do_tensorflow() {
+int do_tensorflow(const char *model_path) {
     // Initialize a tensorflow session
     Session* session;
     tensorflow::SessionOptions options = SessionOptions();
@@ -19,11 +19,9 @@ int do_tensorflow() {
     }
 
     // Read in the protobuf graph we exported
-    // (The path seems to be relative to the cwd. Keep this in mind
-    // when using `bazel run` since the cwd isn't where you call
-    // `bazel run` but from inside a temp folder.)
+    // See https://stackoverflow.com/a/43639305/1076564 for other ways of saving and restoring Tensorflow graphs.
     GraphDef graph_def;
-    status = ReadBinaryProto(Env::Default(), "models/train.pb", &graph_def);
+    status = ReadBinaryProto(Env::Default(), std::string(model_path), &graph_def);
     if (!status.ok()) {
         std::cout << status.ToString() << "\n";
         return 1;

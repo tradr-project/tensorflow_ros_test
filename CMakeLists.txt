@@ -3,6 +3,7 @@ project(tensorflow_ros_test)
 
 find_package(catkin REQUIRED COMPONENTS
   roscpp
+  roslib
   tensorflow_ros
 )
 

@@ -2,6 +2,7 @@
 #include "tensorflow/core/platform/env.h"
 
 #include <ros/ros.h>
+#include <ros/package.h>
 
 
 using namespace tensorflow;
@@ -19,12 +20,10 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  // Read in the protobuf graph we exported
-  // (The path seems to be relative to the cwd. Keep this in mind
-  // when using `bazel run` since the cwd isn't where you call
-  // `bazel run` but from inside a temp folder.)
+  // Read in the protobuf graph we exported.
+  // See https://stackoverflow.com/a/43639305/1076564 for other ways of saving and restoring Tensorflow graphs.
   GraphDef graph_def;
-  status = ReadBinaryProto(Env::Default(), "models/train.pb", &graph_def);
+  status = ReadBinaryProto(Env::Default(), ros::package::getPath("tensorflow_ros_test") + "/models/train.pb", &graph_def);
   if (!status.ok()) {
     std::cout << status.ToString() << "\n";
     return 1;

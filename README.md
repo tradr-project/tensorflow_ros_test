@@ -1,6 +1,6 @@
 # tensorflow\_ros\_test
 
-A package for testing if [tensorflow\_ros](https://github.com/tradr-project/tensorflow_ros) works on your machine.
+A package for testing if [tensorflow\_ros](https://github.com/tradr-project/tensorflow_ros) works on your machine. Report all bugs [there](https://github.com/tradr-project/tensorflow_ros/issues).
 
 **This branch contains a workaround for systems with clashing C++ ABIs. Don't use it unless you have to. First, start with the [master branch](https://github.com/tradr-project/tensorflow_ros_test) and test if it works for you.**
 

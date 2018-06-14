@@ -25,10 +25,13 @@ protected:
 };
 
 TEST_F(TestTensorflowRosFixture, TestSessionRun) {
+  const char* env_model_path = std::getenv("TENSORFLOW_ROS_MODEL_PATH");
+  const std::string model_path = (env_model_path ? env_model_path : ros::package::getPath("tensorflow_ros_test") + "/models/train.pb");
+
   // Read in the protobuf graph we exported.
-  // See https://stackoverflow.com/a/43639305/1076564 for other ways of saving and restoring Tensorflow graphs.
+  // See https://stackoverflow.com/a/43639305/1076564 for other ways of saving and restoring Tensorflow graphs.  
   GraphDef graph_def;
-  Status status = ReadBinaryProto(Env::Default(), ros::package::getPath("tensorflow_ros_test") + "/models/train.pb", &graph_def);
+  Status status = ReadBinaryProto(Env::Default(), model_path, &graph_def);
   ASSERT_TRUE(status.ok());
 
   // Add the graph to the session

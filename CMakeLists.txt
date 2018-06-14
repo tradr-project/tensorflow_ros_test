@@ -39,3 +39,9 @@ target_compile_definitions(tensorflow_ros_test_lib PRIVATE -D_GLIBCXX_USE_CXX11_
 add_executable(tensorflow_ros_test_node src/test.cpp)
 add_dependencies(tensorflow_ros_test_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(tensorflow_ros_test_node tensorflow_ros_test_lib ${catkin_LIBRARIES})
+
+if(${CATKIN_ENABLE_TESTING})
+  catkin_add_gtest(test_tensorflow_ros tests/unit_test.cpp)
+  add_dependencies(test_tensorflow_ros ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+  target_link_libraries(test_tensorflow_ros tensorflow_ros_test_lib ${catkin_LIBRARIES})
+endif()

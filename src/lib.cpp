@@ -7,7 +7,7 @@
 
 using namespace tensorflow;
 
-int do_tensorflow(const char *model_path) {
+int do_tensorflow(const char *model_path, float *result) {
     // Initialize a tensorflow session
     Session* session;
     tensorflow::SessionOptions options = SessionOptions();
@@ -67,8 +67,12 @@ int do_tensorflow(const char *model_path) {
     // https://github.com/tensorflow/tensorflow/blob/master/tensorflow/core/public/tensor.h)
 
     // Print the results
-    std::cout << outputs[0].DebugString() << "\n"; // Tensor<type: float shape: [] values: 30>
-    std::cout << output_c() << "\n"; // 30
+    std::cout << outputs[0].DebugString() << "\n"; // Tensor<type: float shape: [] values: 6>
+    std::cout << output_c() << "\n"; // 6
+
+    if (result != nullptr) {
+        *result = static_cast<float>(output_c());
+    }
 
     // Free any resources used by the session
     session->Close();

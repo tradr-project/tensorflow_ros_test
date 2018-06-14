@@ -1,6 +1,6 @@
 # tensorflow\_ros\_test
 
-A package for testing if [tensorflow\_ros](https://github.com/tradr-project/tensorflow_ros) works on your machine.
+A package for testing if [tensorflow\_ros](https://github.com/tradr-project/tensorflow_ros) works on your machine. Report all bugs [there](https://github.com/tradr-project/tensorflow_ros/issues).
 
 If you succeed to build it, try running
 

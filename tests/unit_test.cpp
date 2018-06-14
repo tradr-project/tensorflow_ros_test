@@ -1,3 +1,5 @@
+#include <cstdlib>
+
 #include <ros/package.h>
 
 #include <gtest/gtest.h>
@@ -6,7 +8,8 @@
 
 TEST(TestTensorflowRosFixture, testSessionRun) {
 
-  const std::string model_path = ros::package::getPath("tensorflow_ros_test") + "/models/train.pb";
+  const char* env_model_path = std::getenv("TENSORFLOW_ROS_MODEL_PATH");
+  const std::string model_path = (env_model_path ? env_model_path : ros::package::getPath("tensorflow_ros_test") + "/models/train.pb");
 
   float result = 0;
 

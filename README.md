@@ -1,13 +1,13 @@
 # tensorflow\_ros\_test
 
-A package for testing if [tensorflow\_ros](https://github.com/tradr-project/tensorflow_ros) works on your machine. Report all bugs [there](https://github.com/tradr-project/tensorflow_ros/issues).
+A package for testing if [tensorflow\_ros\_cpp](https://github.com/tradr-project/tensorflow_ros_cpp) works on your machine. Report all bugs [there](https://github.com/tradr-project/tensorflow_ros_cpp/issues).
 
 **This branch contains a workaround for systems with clashing C++ ABIs. Don't use it unless you have to. First, start with the [master branch](https://github.com/tradr-project/tensorflow_ros_test) and test if it works for you.**
 
 If you succeed to build tensorflow\_ros, try running
 
     rosrun tensorflow_ros_test tensorflow_ros_test_node
-
+    
 It tests running `models/train.pb` with a pre-built tensorflow graph.
 
 You can create such a graph e.g. by:
@@ -27,12 +27,12 @@ You can create such a graph e.g. by:
         print c.eval() # 30.0
 
         tf.train.write_graph(sess.graph_def, 'models/', 'train.pb', as_text=False)
-
+	    
 Thanks to [Jim Fleming](https://medium.com/jim-fleming/loading-a-tensorflow-graph-with-the-c-api-4caaff88463f#.x0ig91dd1) for the sample code.
 
 ## Troubleshooting
 
 If you run into any kind of compilation/linking errors, be sure to read
-[tensorflow\_ros README](https://github.com/tradr-project/tensorflow_ros)
+[tensorflow\_ros\_cpp README](https://github.com/tradr-project/tensorflow_ros_cpp)
 as there are many information about which combination of Tensorflow
 installation and system work together.

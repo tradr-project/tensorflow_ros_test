@@ -18,7 +18,7 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 # call find_package separately so that tensorflow isn't included in everything
-find_package(tensorflow_ros REQUIRED)
+find_package(tensorflow_ros_cpp REQUIRED)
 
 catkin_package()
 
@@ -30,8 +30,8 @@ include_directories(
 # Build the TF library. Do NOT include catkin_LIBRARIES/catkin_INCLUDE_DIRS here!
 add_library(tensorflow_ros_test_lib src/lib.cpp)
 add_dependencies(tensorflow_ros_test_lib ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_include_directories(tensorflow_ros_test_lib BEFORE PRIVATE ${tensorflow_ros_INCLUDE_DIRS})
-target_link_libraries(tensorflow_ros_test_lib ${tensorflow_ros_LIBRARIES})
+target_include_directories(tensorflow_ros_test_lib BEFORE PRIVATE ${tensorflow_ros_cpp_INCLUDE_DIRS})
+target_link_libraries(tensorflow_ros_test_lib ${tensorflow_ros_cpp_LIBRARIES})
 # Compile the TF library using CXX03 ABI.
 target_compile_definitions(tensorflow_ros_test_lib PRIVATE -D_GLIBCXX_USE_CXX11_ABI=0)
 

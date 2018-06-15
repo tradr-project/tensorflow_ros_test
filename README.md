@@ -1,6 +1,6 @@
 # tensorflow\_ros\_test
 
-A package for testing if [tensorflow\_ros](https://github.com/tradr-project/tensorflow_ros) works on your machine.
+A package for testing if [tensorflow\_ros\_cpp](https://github.com/tradr-project/tensorflow_ros_cpp) works on your machine.
 
 If you succeed to build it, try running
 
@@ -31,12 +31,12 @@ Thanks to [Jim Fleming](https://medium.com/jim-fleming/loading-a-tensorflow-grap
 ## Troubleshooting
 
 If you run into any kind of compilation/linking errors, be sure to read
-[tensorflow\_ros README](https://github.com/tradr-project/tensorflow_ros)
+[tensorflow\_ros\_cpp README](https://github.com/tradr-project/tensorflow_ros_cpp)
 as there are many information about which combination of Tensorflow
 installation and system work together.
 
 Specifically, if you get linking errors containing `cxx11` words,
 it means your system is too new to use the pip-installed Tensorflow
-easily. Consult [https://github.com/tradr-project/tensorflow_ros#c-abi-difference-problems].
+easily. Consult [https://github.com/tradr-project/tensorflow_ros_cpp#c-abi-difference-problems].
 One solution is to hide all Tensorflow code
 [behind a C API as shown here](https://github.com/tradr-project/tensorflow_ros_test/tree/kinetic-devel).

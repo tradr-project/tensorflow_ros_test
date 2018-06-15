@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>tensorflow_ros_test</name>
-  <version>1.2.0</version>
-  <description>A test package for checking if tensorflow_ros works correctly.</description>
+  <version>1.3.0</version>
+  <description>A test package for checking if tensorflow_ros_cpp works correctly.</description>
 
   <maintainer email="martin.pecka@cvut.cz">Martin Pecka</maintainer>
 
@@ -12,7 +12,7 @@
 
   <depend>roscpp</depend>
   <depend>roslib</depend>
-  <depend>tensorflow_ros</depend>
+  <depend>tensorflow_ros_cpp</depend>
 
   <test_depend>rosunit</test_depend>
 </package>

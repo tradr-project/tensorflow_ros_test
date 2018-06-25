@@ -1,10 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 project(tensorflow_ros_test)
 
-if("$ENV{ROS_DISTRO}" STRLESS "kinetic")
-    message(WARNING "Your system can probably run an easier-to-use version of this test. Switch to master branch.")
-endif()
-
 # Since ROS Kinetic/Ubuntu Xenial, there is a version clash between the C++ ABI used to compile ROS (C++11)
 # and TF (C++03) which makes it impossible to mix ROS and TF code in a single file.
 # However, if the TF code is separated to its own library which is then linked to the ROS node,
@@ -20,6 +16,10 @@ find_package(catkin REQUIRED COMPONENTS
 # call find_package separately so that tensorflow isn't included in everything
 find_package(tensorflow_ros_cpp REQUIRED)
 
+if(("$ENV{ROS_DISTRO}" STRLESS "kinetic") OR ${tensorflow_ros_cpp_USES_CXX11_ABI})
+  message(WARNING "Your system can probably run an easier-to-use version of this test. Switch to master branch.")
+endif()
+
 catkin_package()
 
 include_directories(
@@ -32,8 +32,8 @@ add_library(tensorflow_ros_test_lib src/lib.cpp)
 add_dependencies(tensorflow_ros_test_lib ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_include_directories(tensorflow_ros_test_lib BEFORE PRIVATE ${tensorflow_ros_cpp_INCLUDE_DIRS})
 target_link_libraries(tensorflow_ros_test_lib ${tensorflow_ros_cpp_LIBRARIES})
-# Compile the TF library using CXX03 ABI.
-target_compile_definitions(tensorflow_ros_test_lib PRIVATE -D_GLIBCXX_USE_CXX11_ABI=0)
+# Compile the TF library using the same C++ ABI used by the found TF library.
+target_compile_definitions(tensorflow_ros_test_lib PRIVATE ${tensorflow_ros_cpp_CMAKE_CXX_FLAGS_PRIVATE})
 
 # Build the ROS node and link the TF library to it. Do NOT include tensorflow_ros_LIBRARIES here!
 add_executable(tensorflow_ros_test_node src/test.cpp)
